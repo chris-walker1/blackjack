@@ -1,4 +1,4 @@
-import numpy
+from numpy import random
 
 suit = ['C', 'H', 'S', 'D']
 value = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -14,5 +14,9 @@ def seed_deck(num_decks):
 
 
 def shuffle_deck(deck):
-    numpy.random.shuffle(deck)
-    return()
+    random.shuffle(deck)
+    return(deck)
+
+
+def hello_world():
+    return('Hello World')

@@ -9,13 +9,6 @@ wins = 0
 losses = 0
 
 
-def clear():
-    if os.name == "nt":
-        os.system("CLS")
-    if os.name == "posix":
-        os.system("clear")
-
-
 def deal(deck):
     hand = []
     for i in range(2):
@@ -30,7 +23,7 @@ def deal(deck):
 
 
 def play_again():
-    again = input("Would you like to play again? (Y/N) : ").lower()
+    again = input("Play again? (Y/N) : ").lower()
     if again == "y":
         dealer_hand = []
         player_hand = []
@@ -66,13 +59,21 @@ def hit(hand):
     return(hand)
 
 
+def clear():
+    if os.name == "nt":
+        os.system("CLS")
+    if os.name == "posix":
+        os.system("clear")
+
+
 def print_results(dealer_hand, player_hand):
     clear()
-    print("Welcome to the table!\n")
-    print("Wins: " + str(wins))
-    print("Losses: " + str(losses))
-    print("The dealer has " + str(dealer_hand) + " for " + str(total(dealer_hand)))
-    print("You have " + str(player_hand) + " for " + str(total(player_hand)))
+    print("\n    WELCOME TO BLACKJACK!\n")
+    print("-" * 30 + "\n")
+    print("    \033[1;32;40mWINS:  \033[1;37;40m%s   \033[1;31;40mLOSSES:  \033[1;37;40m%s\n" % (wins, losses))
+    print("-" * 30 + "\n")
+    print("The dealer has " + str(dealer_hand) + " for a total of " + str(total(dealer_hand)))
+    print("You have " + str(player_hand) + " for a total of " + str(total(player_hand)))
 
 
 def blackjack(dealer_hand, player_hand):
@@ -80,12 +81,12 @@ def blackjack(dealer_hand, player_hand):
     global losses
     if total(player_hand) == 21:
         print_results(dealer_hand, player_hand)
-        print("You got Blackjack\n")
+        print ("Congratulations, you got Blackjack!\n")
         wins += 1
         play_again()
     elif total(dealer_hand) == 21:
         print_results(dealer_hand, player_hand)
-        print("Dealer got Blackjack\n")
+        print ("Dealer got Blackjack\n")
         losses += 1
         play_again()
 
@@ -95,27 +96,28 @@ def score(dealer_hand, player_hand):
     global losses
     if total(player_hand) == 21:
         print_results(dealer_hand, player_hand)
-        print("You got Blackjack\n")
+        print ("Congratulations, you got Blackjack!\n")
         wins += 1
     elif total(dealer_hand) == 21:
         print_results(dealer_hand, player_hand)
-        print("Dealer got Blackjack\n")
+        print ("Dealer got Blackjack\n")
         losses += 1
     elif total(player_hand) > 21:
         print_results(dealer_hand, player_hand)
-        print("You bust")
+        print ("Bust. You lose\n")
         losses += 1
     elif total(dealer_hand) > 21:
         print_results(dealer_hand, player_hand)
-        print("Dealer bust")
+        print ("Dealer bust. You win!\n")
         wins += 1
     elif total(player_hand) < total(dealer_hand):
         print_results(dealer_hand, player_hand)
-        print("You lose")
+        print ("You lose\n")
         losses += 1
     elif total(player_hand) > total(dealer_hand):
         print_results(dealer_hand, player_hand)
-        print("You win")
+        print ("Congratulations, you win\n")
+        wins += 1
 
 
 def game():
@@ -123,31 +125,32 @@ def game():
     global losses
     choice = 0
     clear()
-    print("Welcome to the table!\n")
-    print("Wins: " + str(wins))
-    print("Losses: " + str(losses))
+    print("\n    WELCOME TO BLACKJACK!\n")
+    print("-" * 30 + "\n")
+    print("    \033[1;32;40mWINS:  \033[1;37;40m%s   \033[1;31;40mLOSSES:  \033[1;37;40m%s\n" % (wins, losses))
+    print("-" * 30 + "\n")
     dealer_hand = deal(deck)
     player_hand = deal(deck)
-    print("The dealer is showing a " + str(dealer_hand[0]))
-    print("You have " + str(player_hand) + " for " + str(total(player_hand)))
+    print ("The dealer is showing " + str(dealer_hand[0]))
+    print ("You have " + str(player_hand) + " for a total of " + str(total(player_hand)))
     blackjack(dealer_hand, player_hand)
     quit = False
     while not quit:
-        choice = input("[H]it or [S]tand? Type Q to quit: ").lower()
-        if choice == "h":
+        choice = input("Do you want to [H]it or [S]tand? Type q to quit: ").lower()
+        if choice == 'h':
             hit(player_hand)
             print(player_hand)
             print("Hand total: " + str(total(player_hand)))
             if total(player_hand) > 21:
-                print("You bust")
+                print("Bust. You lose\n")
                 losses += 1
                 play_again()
-        elif choice == "s":
+        elif choice == 's':
             while total(dealer_hand) < 17:
                 hit(dealer_hand)
                 print(dealer_hand)
                 if total(dealer_hand) > 21:
-                    print("Dealer bust")
+                    print("Dealer bust. You win!\n")
                     wins += 1
                     play_again()
             score(dealer_hand, player_hand)
@@ -160,4 +163,3 @@ def game():
 
 if __name__ == "__main__":
     game()
-    

@@ -27,7 +27,7 @@ def play_again():
     if again == "y":
         dealer_hand = []
         player_hand = []
-        deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] * 4
+        deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] * 4 * int(decks)
         game()
     else:
         print("Bye!")
@@ -137,7 +137,7 @@ def game():
     quit = False
     while not quit:
         choice = input("Do you want to [H]it or [S]tand? Type q to quit: ").lower()
-        if choice == 'h':
+        if choice == "h":
             hit(player_hand)
             print(player_hand)
             print("Hand total: " + str(total(player_hand)))
@@ -145,7 +145,7 @@ def game():
                 print("Bust. You lose\n")
                 losses += 1
                 play_again()
-        elif choice == 's':
+        elif choice == "s":
             while total(dealer_hand) < 17:
                 hit(dealer_hand)
                 print(dealer_hand)

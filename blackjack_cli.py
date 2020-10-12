@@ -1,11 +1,6 @@
-from blackjack import seed_deck, shuffle_deck
+from blackjack import deal
 
-deck = seed_deck(6)
-print(deck)
+deck = [11, 12, 13, 14]
 
-shuffled_deck = shuffle_deck(deck)
-print(shuffled_deck)
-
-small_deck = [('C', '3')]
-shuffle_small_deck = shuffle_deck(small_deck)
-print(shuffle_small_deck)
+hand = deal(deck)
+print(hand)
